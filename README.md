@@ -45,4 +45,9 @@ And then run
 ```console
 python chat.py
 ```
+Then finally ask:
+```console
+Is anyone there?
+```
+#### (PLEASE don't be shocked if someone answers)
 
