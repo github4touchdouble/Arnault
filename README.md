@@ -52,7 +52,7 @@ Is anyone there?
 #### (PLEASE don't be shocked if someone answers)
 Arnault is also available as an API via:
 ```console
-https://arnaultapi.onrender.com/api
+https://arnaultapi.onrender.com/
 ```
 *(TODO)*
 
