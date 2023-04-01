@@ -50,4 +50,26 @@ Then finally ask:
 Is anyone there?
 ```
 #### (PLEASE don't be shocked if someone answers)
+Arnault is also available as an API via:
+```console
+https://arnaultapi.onrender.com/api
+```
+*(TODO)*
 
+## What's next
+
+> __NOTE__: _See [GitHub issues](https://github.com/carlobortolan/Embloy/issues) for more information_
+
+- Utilize the API with a web frontend
+- Enhance language model with more data (and focus it n one discipline)
+- ...
+
+---
+
+---
+
+© Jan Hummel
+
+> Jan Hummel &nbsp;&middot;&nbsp;
+> GitHub [@github4touchdouble](https://github.com/github4touchdouble) &nbsp;&middot;&nbsp;
+> contact via [@jan.hummel@tum.de](jan.hummel@tum.de)
