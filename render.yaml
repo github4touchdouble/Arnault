@@ -1,0 +1,5 @@
+name: Arnault
+env:
+  PYTHONUNBUFFERED: "true"
+buildCommand: "pip install -r requirements.txt ; pip install numpy;pip install torch; pip install nltk; python -c "import nltk; nltk.download('punkt')" ; python train.py"
+start_command: "waitress-serve --port=8000 app:app"

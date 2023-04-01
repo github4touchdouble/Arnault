@@ -2,6 +2,7 @@ torch
 numpy
 flask
 nltk
+waitress
 
 
 
