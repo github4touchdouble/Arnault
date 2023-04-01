@@ -3,14 +3,14 @@ from datetime import datetime
 from handlers import chat
 app = Flask(__name__)
 
-@app.route("/api")
+@app.route("/")
 def hello_world():
     data = {
         "response": f"Hello, this is the Arnault API v0.1 current date and time is {datetime.now()}."
     }
     return jsonify(data)
 
-@app.route("/api", methods=["POST"])
+@app.route("/", methods=["POST"])
 def ask_albert():
     # check if request is in JSON format
     if not request.is_json:
