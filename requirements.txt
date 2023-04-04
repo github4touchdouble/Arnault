@@ -3,6 +3,8 @@ numpy
 flask
 nltk
 waitress
+pandas
+transformers
 
 
 

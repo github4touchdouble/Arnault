@@ -5,7 +5,9 @@ import json
 import torch
 import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
+from transformers import GPT2LMHeadModel, GPT2Tokenizer, DataCollatorForLanguageModeling, TextDataset
 
+import preprocessor
 from nltk_utils import bag_of_words, tokenize, stem
 from model import NeuralNet
 
@@ -128,3 +130,75 @@ FILE = "data.pth"
 torch.save(data, FILE)
 
 print(f'training complete. file saved to {FILE}')
+
+
+'''
+# Load the pre-trained GPT-2 model and tokenizer
+tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
+model = GPT2LMHeadModel.from_pretrained('gpt2')
+preprocessed_data = preprocessor.preprocess_tweets(['lib/language_data/blog.csv'])
+
+# Define a custom dataset for text data
+class TextDataset(Dataset):
+    def __init__(self, texts, tokenizer):
+        self.texts = texts
+        self.tokenizer = tokenizer
+
+    def __len__(self):
+        return len(self.texts)
+
+    def __getitem__(self, idx):
+        return torch.tensor(self.tokenizer.encode(self.texts[idx], add_special_tokens=True))
+
+
+# Tokenize the preprocessed tweets using the GPT-2 tokenizer
+tokenized_tweets = preprocessed_data['tweet'].apply(lambda x: tokenizer.encode(x, add_special_tokens=True)).tolist()
+
+# Train the GPT-2 model on the preprocessed tweets
+train_dataset = TextDataset(tokenized_tweets, tokenizer)
+model.train()
+train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=1, shuffle=True)
+
+optimizer = torch.optim.Adam(model.parameters(), lr=5e-5)
+
+for epoch in range(5):
+    for batch in train_loader:
+        loss = model(batch, labels=batch)[0]
+        loss.backward()
+        optimizer.step()
+        optimizer.zero_grad()
+
+class ChatDataset(Dataset):
+
+    def __init__(self):
+        self.n_samples = len(X_train)
+        self.x_data = X_train
+        self.y_data = y_train
+
+    # support indexing such that dataset[i] can be used to get i-th sample
+    def __getitem__(self, index):
+        return self.x_data[index], self.y_data[index]
+
+    # we can call len(dataset) to return the size
+    def __len__(self):
+        return self.n_samples
+
+
+dataset = ChatDataset()
+train_loader = DataLoader(dataset=dataset,
+                          batch_size=batch_size,
+                          shuffle=True,
+                          num_workers=0)
+
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+model = NeuralNet(input_size, hidden_size, output_size).to(device)
+
+# Loss and optimizer
+criterion = nn.CrossEntropyLoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+# Save the trained model to a file
+model_path = 'lib/trained_models/tweet_trained'
+model.save_pretrained(model_path)
+'''
+
